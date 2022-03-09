@@ -19,8 +19,15 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "posts:index"
 # LOGOUT_REDIRECT_URL = "posts:index"
 
+CSRF_FAILURE_VIEW = "core.views.csrf_failure"
+
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -33,6 +40,7 @@ INSTALLED_APPS = [
     "core",
     "posts",
     "about",
+    "sorl.thumbnail",
 ]
 
 MIDDLEWARE = [
@@ -46,9 +54,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "yatube.urls"
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 TEMPLATES = [
