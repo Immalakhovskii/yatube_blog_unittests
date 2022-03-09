@@ -9,10 +9,10 @@ SECRET_KEY = "xmdo60g%f+)52rgukaysj4d1^+k8s%1(h2e%tfo6qe@u52$os#"
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '[::1]',
-    'testserver',
+    "localhost",
+    "127.0.0.1",
+    "[::1]",
+    "testserver",
 ]
 
 LOGIN_URL = "login"
