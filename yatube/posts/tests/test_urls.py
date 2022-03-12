@@ -62,12 +62,21 @@ class PostURLTests(TestCase):
         response = self.guest_client.get(f"/{fake_url.url()}/")
         self.assertEqual(response.status_code, STATUS_404)
 
-    def test_post_create_and_edit_redirect_anonymous(self):
-        """Проверка редиректов анонима с create/ и posts/edit/."""
+    def test_post_create_edit_and_comment_redirects_anonymous(self):
+        """Проверка редиректов анонима с create/, edit/ и comment/."""
         response = self.guest_client.get("/create/", follow=True)
         self.assertRedirects(response, "/auth/login/?next=/create/")
-        response = self.guest_client.get(f"/posts/{self.post.id}/edit/",
-                                         follow=True)
+        response = self.guest_client.get(
+            f"/posts/{self.post.id}/edit/",
+            follow=True
+        )
         self.assertRedirects(
             response, f"/auth/login/?next=/posts/{self.post.id}/edit/"
+        )
+        response = self.guest_client.get(
+            f"/posts/{self.post.id}/comment/",
+            follow=True
+        )
+        self.assertRedirects(
+            response, f"/auth/login/?next=/posts/{self.post.id}/comment/"
         )

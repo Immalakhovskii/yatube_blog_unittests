@@ -4,6 +4,7 @@ from django.db import models
 User = get_user_model()
 
 CHARS_OF_POST_TEXT = 15
+CHARS_OF_COMMENT_TEXT = 15
 
 
 class Group(models.Model):
@@ -39,11 +40,11 @@ class Post(models.Model):
         help_text="Выберите группу",
     )
 
-    # image = models.ImageField(
-    #    "Картинка",
-    #    upload_to="posts/",
-    #    blank=True
-    # )
+    image = models.ImageField(
+        "Картинка",
+        upload_to="posts/",
+        blank=True
+    )
 
     def __str__(self):
         return self.text[:CHARS_OF_POST_TEXT]
@@ -52,3 +53,29 @@ class Post(models.Model):
         ordering = ["-pub_date"]
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name="comments",
+        verbose_name="Пост",
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="comments",
+        verbose_name="Автор",
+    )
+    text = models.TextField(
+        "Текст комментария",
+        help_text="Комментировать пост"
+    )
+    created = models.DateTimeField(
+        "Дата и время публикации",
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.text[:CHARS_OF_COMMENT_TEXT]
