@@ -15,6 +15,8 @@ User = get_user_model()
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
+FIRST_OBJECT = 0
+
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PostViewsTests(TestCase):
@@ -70,7 +72,7 @@ class PostViewsTests(TestCase):
              kwargs={"username": self.user.username}))),
         ]
         for response in responses:
-            first_object = response.context["posts"][0]
+            first_object = response.context["posts"][FIRST_OBJECT]
             first_object_attributes = {
                 first_object.author.username: self.user.username,
                 first_object.text: self.post.text,

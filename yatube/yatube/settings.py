@@ -29,6 +29,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

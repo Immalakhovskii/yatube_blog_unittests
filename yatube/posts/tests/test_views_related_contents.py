@@ -8,6 +8,8 @@ from ..models import Post, Group, Comment
 
 User = get_user_model()
 
+FIRST_OBJECT = 0
+
 
 class PostViewsTests(TestCase):
     @classmethod
@@ -47,5 +49,5 @@ class PostViewsTests(TestCase):
         """Проверка наличия комментария поста на странице post_detail."""
         response = self.guest_client.get(reverse("posts:post_detail",
                                          kwargs={"post_id": self.post.id}))
-        comment = response.context.get("comments")[0]
+        comment = response.context.get("comments")[FIRST_OBJECT]
         self.assertEqual(comment, self.comment)

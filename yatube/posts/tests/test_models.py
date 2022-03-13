@@ -1,3 +1,5 @@
+from faker import Faker
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
@@ -12,15 +14,15 @@ class PostModelTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username="auth")
+        fake = Faker()
+        cls.user = User.objects.create_user(
+            username=fake.name()
+        )
         cls.group = Group.objects.create(
-            title="Тестовая группа",
-            slug="test_group",
-            description="Тестовое описание",
+            title=fake.word(),
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text="Тестовый пост длиннее 15 символов",
         )
 
     def test_models_have_correct_objects_names(self):
@@ -39,8 +41,8 @@ class PostModelTest(TestCase):
         """Проверка verbose_name в полях."""
         post = PostModelTest.post
         field_verboses = {
-            "text": "Текст поста",
-            "pub_date": "Дата публикации",
+            "text": "Текст",
+            "created": "Дата создания",
             "author": "Автор",
             "group": "Группа",
         }
@@ -54,7 +56,7 @@ class PostModelTest(TestCase):
         """Проверка совпадения help_texts в полях с ожидаемыми."""
         post = PostModelTest.post
         field_help_texts = {
-            "text": "Введите текст поста",
+            "text": "Введите текст",
             "group": "Выберите группу",
         }
         for field, expected_value in field_help_texts.items():

@@ -56,7 +56,7 @@ class PostURLTests(TestCase):
                 response = self.authorized_client.get(url)
                 self.assertEqual(response.status_code, status)
 
-    def test_nonexistent_url_drops_404(self):
+    def test_nonexistent_url_returns_404(self):
         """Проверка запроса к несущетвующему URL."""
         fake_url = Faker()
         response = self.guest_client.get(f"/{fake_url.url()}/")
