@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from ..models import Post, Group, Comment
+from ..models import Post, Group, Comment, Follow
 
 User = get_user_model()
 
@@ -17,6 +17,9 @@ class PostViewsTests(TestCase):
         super().setUpClass()
         fake = Faker()
         cls.user = User.objects.create_user(
+            username=fake.name(),
+        )
+        cls.another_user = User.objects.create_user(
             username=fake.name(),
         )
         cls.group = Group.objects.create(
@@ -34,9 +37,15 @@ class PostViewsTests(TestCase):
             post=cls.post,
             author=cls.user,
         )
+        cls.follow = Follow.objects.create(
+            user=cls.user,
+            author=cls.another_user,
+        )
 
     def setUp(self):
         self.guest_client = Client()
+        self.authorized_client = Client()
+        self.authorized_client.force_login(self.user)
 
     def test_post_with_group_belongs_only_to_its_group(self):
         """Проверка принадлежности поста только своей группе."""
@@ -51,3 +60,15 @@ class PostViewsTests(TestCase):
                                          kwargs={"post_id": self.post.id}))
         comment = response.context.get("comments")[FIRST_OBJECT]
         self.assertEqual(comment, self.comment)
+
+    # def test_authorized_user_can_subscribe_to_author(self):
+    #    """Проверка возможности подписки на автора"""
+    #    response = self.authorized_client.get(
+    #        reverse("posts:profile_follow",
+    #                kwargs={"username": self.another_user.username})
+    #    )
+    #    follow_object = response.content.get(
+    #        user=self.user,
+    #        author=self.another_user,
+    #    )
+    #    self.assertEqual(follow_object, self.follow)

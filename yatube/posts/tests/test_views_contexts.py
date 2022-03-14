@@ -72,7 +72,7 @@ class PostViewsTests(TestCase):
              kwargs={"username": self.user.username}))),
         ]
         for response in responses:
-            first_object = response.context["posts"][FIRST_OBJECT]
+            first_object = response.context["page_obj"][FIRST_OBJECT]
             first_object_attributes = {
                 first_object.author.username: self.user.username,
                 first_object.text: self.post.text,

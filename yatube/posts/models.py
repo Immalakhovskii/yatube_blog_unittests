@@ -57,7 +57,7 @@ class Comment(ModelWithDateAndText):
     )
     author = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name="comments",
         verbose_name="Автор",
     )
@@ -73,7 +73,7 @@ class Follow(models.Model):
         related_name="follower",
         verbose_name="Подписчик",
     )
-    author = models.ForeignKey(
+    author = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         related_name="following",

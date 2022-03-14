@@ -38,7 +38,7 @@ class PostModelTest(TestCase):
                 self.assertEqual(title, expected_title)
 
     def test_post_model_verbose_names(self):
-        """Проверка verbose_name в полях."""
+        """Проверка ожидаемых verbose_names в полях Post."""
         post = PostModelTest.post
         field_verboses = {
             "text": "Текст",
@@ -53,7 +53,7 @@ class PostModelTest(TestCase):
                 )
 
     def test_post_model_help_texts(self):
-        """Проверка совпадения help_texts в полях с ожидаемыми."""
+        """Проверка наличия ожидаемых help_texts в полях Post."""
         post = PostModelTest.post
         field_help_texts = {
             "text": "Введите текст",
