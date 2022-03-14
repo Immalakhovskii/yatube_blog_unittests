@@ -20,14 +20,17 @@ class PostViewsTests(TestCase):
         cls.post = Post.objects.create(
             id=fake.random_int(),
             author=cls.user,
+            text=fake.text(),
         )
 
     def setUp(self):
         self.guest_client = Client()
 
     def test_index_content_saved_in_cache(self):
-        """Проверка сохранения постов index в кеше"""
-        deleted_post = Post.objects.filter(id=self.post.id).delete()
+        """Проверка сохранения постов index в кэше"""
         response = self.guest_client.get(reverse("posts:index"))
-        index_post = response.context["posts"]
-        self.assertNotEqual(deleted_post, index_post)
+        index_post = response.content
+        Post.objects.filter(id=self.post.id).delete()
+        response = self.guest_client.get(reverse("posts:index"))
+        index_post_2 = response.content
+        self.assertEqual(index_post, index_post_2)
