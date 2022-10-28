@@ -1,2 +1,2 @@
-# Blogging platform Yatube (Unittests Edition) #
+# Blogging platform Yatube (Unittests) #
 *This repository shows one of a major steps during creation blogging platform Yatube; this version has unit tests coverage for posts and about applications. Check out final result and read detailed description of the project here: https://github.com/Immalakhovskii/yatube_blog_final*
